@@ -1,0 +1,9 @@
+KERNEL_MODULE_AUTOLOAD += "xfs"
+
+# We know about rtc
+MACHINE_FEATURES_BACKFILL_CONSIDERED = "rtc"
+
+IMAGEVERSION := "${DISTRO_NAME}-${DISTRO_VERSION}-${DATE}"
+IMAGEVERSION[vardepsexclude] = "DATE"
+
+MACHINE_FEATURES += "3dtv alsa hdmicec switchoff"
