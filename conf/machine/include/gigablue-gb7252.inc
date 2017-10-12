@@ -15,6 +15,7 @@ IMGDEPLOYDIR ?= "${DEPLOY_DIR_IMAGE}"
 IMAGE_CMD_tar_prepend = "\
     mkdir -p ${IMGDEPLOYDIR}/${IMAGEDIR}; \
     cp ${DEPLOY_DIR_IMAGE}/gb7252_boot.bin ${IMGDEPLOYDIR}/${IMAGEDIR}/boot.bin; \
+    cp ${DEPLOY_DIR_IMAGE}/gb7252_gpt.bin ${IMGDEPLOYDIR}/${IMAGEDIR}/gpt.bin; \
     cp ${DEPLOY_DIR_IMAGE}/gb7252_rescue.bin ${IMGDEPLOYDIR}/${IMAGEDIR}/rescue.bin; \
     cp ${DEPLOY_DIR_IMAGE}/zImage ${IMGDEPLOYDIR}/${IMAGEDIR}/kernel.bin; \
     echo ${DISTRO_NAME}-${DISTRO_VERSION}.${BUILD_VERSION} > ${IMGDEPLOYDIR}/${IMAGEDIR}/imageversion; \
@@ -30,6 +31,7 @@ IMAGE_CMD_tar_prepend = "\
 MACHINE_ESSENTIAL_EXTRA_RDEPENDS = " \
     gigablue-platform-util-gb7252 \
     gigablue-ddbootup \
+    gigablue-swapcreate \
 "
 
 EXTRA_IMAGEDEPENDS = "\
