@@ -5,7 +5,7 @@ LICENSE = "CLOSED"
 PACKAGE_ARCH := "${MACHINE}"
 
 PV = "${KV}+${SRCDATE}"
-PR = "r3"
+PR = "r4"
 
 INHIBIT_PACKAGE_STRIP = "1"
 INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
@@ -29,6 +29,6 @@ do_populate_sysroot() {
 }
 FILES_${PN}="/home/root/platform /etc/init.d"
 inherit update-rc.d
-INITSCRIPT_PARAMS = "start 38 S . stop 90 0 ."
+INITSCRIPT_PARAMS = "start 04 S . stop 90 0 ."
 INITSCRIPT_NAME = "gigablue-platform-util"
 INSANE_SKIP_${PN} += "already-stripped"
