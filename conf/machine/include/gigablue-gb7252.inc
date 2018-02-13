@@ -7,7 +7,7 @@ MACHINE_EXTRA_RRECOMMENDS = " \
     ntfs-3g \
 "
 
-PREFERRED_VERSION_linux-gigablue = "3.14.28"
+PREFERRED_VERSION_linux-gigablue = "4.1.20"
 PREFERRED_PROVIDER_virtual/kernel = "linux-gigablue"
 
 IMGDEPLOYDIR ?= "${DEPLOY_DIR_IMAGE}"
