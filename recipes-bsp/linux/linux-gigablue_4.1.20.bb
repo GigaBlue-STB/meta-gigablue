@@ -2,38 +2,30 @@ SUMMARY = "Linux kernel for ${MACHINE}"
 LICENSE = "GPLv2"
 SECTION = "kernel"
 
-MODULE = "linux-3.14.28"
+MODULE = "linux-4.1.20"
 
 inherit kernel machine_kernel_pr
 
-MACHINE_KERNEL_PR_append = "r4"
+MACHINE_KERNEL_PR_append = "r1"
 
-SRC_URI[md5sum] = "c1e96f702ca737630f5acb0dce2388e7"
-SRC_URI[sha256sum] = "72928012a7dbacbf95a371d9faa6800a20afd6b106958298cfc41028878aac4e"
+SRC_URI[md5sum] = "6036c5d722071e72d5d66dbf7ee74992"
+SRC_URI[sha256sum] = "eff7eecf55dd75ecb44bd8b8fe16f588d19c1eac92125eaed2b6834348d12def"
 
 LIC_FILES_CHKSUM = "file://COPYING;md5=d7810fab7487fb0aad327b76f1be7cd7"
 
-SRC_URI += "http://impex-sat.de/gigablue/linux/gigablue-linux-${PV}-20170331.tar.gz \
+SRC_URI += "http://impex-sat.de/gigablue/linux/gigablue-linux-${PV}-20180206.tar.gz \
 	file://defconfig \
-	file://linux_dvb_adapter.patch \
-	file://bcm_genet_disable_warn.patch \
-	file://rt2800usb_fix_warn_tx_status_timeout_to_dbg.patch \
-	file://usb_core_hub_msleep.patch \
-	file://rtl8712_fix_build_error.patch \
+	file://gbfindkerneldevice.py \
+	file://linux_dvb-core.patch \
+	file://bcmgenet-recovery-fix.patch \
+	file://linux_4_1_1_9_dvbs2x.patch \
 	file://kernel-add-support-for-gcc6.patch \
-	file://0001-Support-TBS-USB-drivers.patch \
+	file://0001-Support-TBS-USB-drivers-for-4.1-kernel.patch \
+	file://0001-TBS-fixes-for-4.1-kernel.patch \
 	file://0001-STV-Add-PLS-support.patch \
 	file://0001-STV-Add-SNR-Signal-report-parameters.patch \
-	file://linux_prevent_usb_dma_from_bmem.patch \
-	file://genksyms_fix_typeof_handling.patch \
-	file://gbfindkerneldevice.py \
-	file://0001-tuners-tda18273-silicon-tuner-driver.patch \
-	file://01-10-si2157-Silicon-Labs-Si2157-silicon-tuner-driver.patch \
-	file://02-10-si2168-Silicon-Labs-Si2168-DVB-T-T2-C-demod-driver.patch \
-	file://0003-cxusb-Geniatech-T230-support.patch \
-	file://CONFIG_DVB_SP2.patch \
-	file://dvbsky.patch \
-	file://rtl2832u-2.patch \
+	file://blindscan2.patch \
+	file://0001-stv090x-optimized-TS-sync-control.patch \
 "
 
 S = "${WORKDIR}/linux-${PV}"

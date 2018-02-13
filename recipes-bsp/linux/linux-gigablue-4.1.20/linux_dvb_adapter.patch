@@ -1,8 +1,8 @@
 diff --git a/drivers/media/dvb-core/dvbdev.c b/drivers/media/dvb-core/dvbdev.c
-index 983db75..a5ad43d 100644
+index 13bb57f..69cc48d 100644
 --- a/drivers/media/dvb-core/dvbdev.c
 +++ b/drivers/media/dvb-core/dvbdev.c
-@@ -296,9 +296,9 @@ static int dvbdev_check_free_adapter_num(int num)
+@@ -438,9 +438,9 @@ static int dvbdev_check_free_adapter_num(int num)
  	return 1;
  }
  
@@ -14,18 +14,18 @@ index 983db75..a5ad43d 100644
  
  	while (num < DVB_MAX_ADAPTERS) {
  		if (dvbdev_check_free_adapter_num(num))
-@@ -315,17 +315,17 @@ int dvb_register_adapter(struct dvb_adapter *adap, const char *name,
+@@ -457,17 +457,18 @@ int dvb_register_adapter(struct dvb_adapter *adap, const char *name,
  			 short *adapter_nums)
  {
  	int i, num;
--
 +	char *gb_name = strstr(name, "_gigablue_");
+ 
  	mutex_lock(&dvbdev_register_lock);
  
  	for (i = 0; i < DVB_MAX_ADAPTERS; ++i) {
  		num = adapter_nums[i];
 -		if (num >= 0  &&  num < DVB_MAX_ADAPTERS) {
-+		if (num >= gb_name? 0:1  &&  num < DVB_MAX_ADAPTERS) {
++		if (num >= (gb_name? 0:1)  &&  num < DVB_MAX_ADAPTERS) {
  		/* use the one the driver asked for */
  			if (dvbdev_check_free_adapter_num(num))
  				break;
