@@ -11,7 +11,7 @@ INHIBIT_PACKAGE_STRIP = "1"
 INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
 
 SRC_URI = " \
-    http://impex-sat.de/gigablue/drivers/platform-util-gb7252-${KV}-${SRCDATE}.zip \
+    http://opensat.de/gigablue/drivers/platform-util-gb7252-${KV}-${SRCDATE}.zip \
     file://${INITSCRIPT_NAME}.sysvinit \
 "
 
