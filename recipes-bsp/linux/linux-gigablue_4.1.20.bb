@@ -2,6 +2,8 @@ SUMMARY = "Linux kernel for ${MACHINE}"
 LICENSE = "GPLv2"
 SECTION = "kernel"
 
+PACKAGE_ARCH = "${MACHINE_ARCH}"
+
 MODULE = "linux-4.1.20"
 
 inherit kernel machine_kernel_pr
