@@ -3,9 +3,10 @@ SECTION = "base"
 PRIORITY = "required"
 LICENSE = "CLOSED"
 PACKAGE_ARCH := "${MACHINE}"
+require conf/license/license-close.inc
 
 PV = "${KV}+${SRCDATE}"
-PR = "r4"
+PR = "r5"
 
 INHIBIT_PACKAGE_STRIP = "1"
 INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
@@ -23,12 +24,17 @@ do_install() {
     install -d ${D}/etc/init.d
     install -m 0755 ${WORKDIR}/${INITSCRIPT_NAME}.sysvinit ${D}/etc/init.d/${INITSCRIPT_NAME}
 }
+
 do_package_qa() {
 }
 do_populate_sysroot() {
 }
+
 FILES_${PN}="/home/root/platform /etc/init.d"
+
 inherit update-rc.d
-INITSCRIPT_PARAMS = "start 04 S . stop 90 0 ."
+
+INITSCRIPT_PARAMS = "start 65 S . stop 90 0 ."
 INITSCRIPT_NAME = "gigablue-platform-util"
+
 INSANE_SKIP_${PN} += "already-stripped"
