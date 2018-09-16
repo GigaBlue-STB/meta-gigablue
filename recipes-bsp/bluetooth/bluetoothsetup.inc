@@ -1,7 +1,7 @@
 DSCRIPTION = "GigaBlue bluetooth plugin"
 
 LICENSE = "CLOSED"
-require conf/license/license-close.inc
+# require conf/license/license-close.inc
 
 DEPENDS = "python-native"
 RDEPENDS_${PN} = "gb-bluetooth-util libusb1"

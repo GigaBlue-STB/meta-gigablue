@@ -2,7 +2,7 @@ SUMMARY = "HbbTV for QT browser"
 SECTION = "base"
 PRIORITY = "optional"
 LICENSE = "CLOSED"
-require conf/license/license-close.inc
+# require conf/license/license-close.inc
 PACKAGE_ARCH := "${MACHINE_ARCH}"
 
 SRCDATE = "20180628_r0"

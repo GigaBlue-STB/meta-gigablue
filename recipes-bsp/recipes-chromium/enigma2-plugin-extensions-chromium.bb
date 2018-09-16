@@ -2,7 +2,7 @@ DESCRIPTION = "E2 Chromium Plugin"
 SECTION = "base"
 PRIORITY = "optional"
 LICENSE = "CLOSED"
-require conf/license/license-close.inc
+# require conf/license/license-close.inc
 
 PV = "1.0"
 PR = "20180628_r0"
