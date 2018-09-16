@@ -2,7 +2,7 @@ SUMMARY = "Chromium and YoutubeTV"
 SECTION = "base"
 PRIORITY = "optional"
 LICENSE = "CLOSED"
-require conf/license/license-close.inc
+# require conf/license/license-close.inc
 PACKAGE_ARCH := "${MACHINE_ARCH}"
 
 PV = "1.0"
