@@ -11,12 +11,7 @@ SRC_URI = " \
     http://source.mynonpublic.com/gigablue/bluetooth/gb-bluetooth-util-gb7252-${PR}.tar.gz \
 "
 
-S="${WORKDIR}/gb-bluetooth-util-${MACHINE}"
-
-do_install() {
-	install -d ${D}/usr/local/bin
-	install -m 0755 ${S}/* ${D}/usr/local/bin
-}
+S="${WORKDIR}/gb-bluetooth-util-gb7252"
 
 do_package_qa() {
 }

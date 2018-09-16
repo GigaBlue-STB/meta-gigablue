@@ -9,6 +9,8 @@ MACHINE_EXTRA_RRECOMMENDS = " \
 
 PREFERRED_VERSION_linux-gigablue = "4.1.20"
 PREFERRED_PROVIDER_virtual/kernel = "linux-gigablue"
+PREFERRED_PROVIDER_virtual/egl = "gb-v3ddriver-gb7252"
+PREFERRED_PROVIDER_virtual/libgles2 = "gb-v3ddriver-gb7252"
 
 IMGDEPLOYDIR ?= "${DEPLOY_DIR_IMAGE}"
 
@@ -34,6 +36,20 @@ MACHINE_ESSENTIAL_EXTRA_RDEPENDS = " \
     gigablue-swapcreate \
 "
 
+MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS = " \
+    gb-v3ddriver-gb7252 \
+    gb-qteglfs-platform \
+    "
+
 EXTRA_IMAGEDEPENDS = "\
     gigablue-initrd-cfe-gb7252 \
-"
+    "
+
+IMAGE_INSTALL_append += "\
+    bluetoothsetup-gb7252 \
+    "
+
+OPTIONAL_BSP_ENIGMA2_PACKAGES = "\
+    enigma2-plugin-extensions-hbbtv-gb \
+    enigma2-plugin-extensions-chromium \
+    "
