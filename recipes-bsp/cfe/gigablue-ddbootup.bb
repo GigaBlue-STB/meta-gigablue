@@ -5,7 +5,7 @@ LICENSE = "CLOSED"
 PACKAGE_ARCH = "${MACHINE}"
 
 PV = "1.0"
-PR = "r0"
+PR = "r1"
 
 S = "${WORKDIR}"
 
@@ -20,7 +20,7 @@ do_install() {
     echo 'touch /dev/dbox/lcd0' >> ${WORKDIR}/ddbootup
     echo 'echo ${MACHINE} > /proc/stb/info/gbmodel' >> ${WORKDIR}/ddbootup
     install -m 0755 ${WORKDIR}/ddbootup ${D}${sysconfdir}/init.d
-    ln -sf ../init.d/ddbootup ${D}${sysconfdir}/rcS.d/S39ddbootup
+    ln -sf ../init.d/ddbootup ${D}${sysconfdir}/rcS.d/S66ddbootup
 }
 
 FILES_${PN} += "${sysconfdir}"
