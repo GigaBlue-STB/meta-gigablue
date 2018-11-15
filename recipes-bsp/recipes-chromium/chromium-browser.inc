@@ -13,7 +13,7 @@ SRC_URI = "http://source.mynonpublic.com/gigablue/chromium/chromium-gigablue_gb7
 PREFERRED_VERSION_nss = "3.17.3"
 
 DEPENDS = "nss"
-RDEPENDS_${PN} = "nspr nss libxslt libcurl libudev"
+RDEPENDS_${PN} = "nspr nss libxslt libcurl libudev libcrypto-compat libudev1-compat"
 RDEPENDS_${PN} += "gb-v3ddriver-gb7252"
 
 do_install() {
