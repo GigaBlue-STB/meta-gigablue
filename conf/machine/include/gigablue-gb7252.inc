@@ -18,9 +18,10 @@ IMGDEPLOYDIR ?= "${DEPLOY_DIR_IMAGE}"
 
 IMAGE_CMD_tar_prepend = "\
     mkdir -p ${IMGDEPLOYDIR}/${IMAGEDIR}; \
-    cp ${DEPLOY_DIR_IMAGE}/gb7252_boot.bin ${IMGDEPLOYDIR}/${IMAGEDIR}/boot.bin; \
-    cp ${DEPLOY_DIR_IMAGE}/gb7252_gpt.bin ${IMGDEPLOYDIR}/${IMAGEDIR}/gpt.bin; \
-    cp ${DEPLOY_DIR_IMAGE}/gb7252_rescue.bin ${IMGDEPLOYDIR}/${IMAGEDIR}/rescue.bin; \
+    cp ${DEPLOY_DIR_IMAGE}/${MACHINE}_boot.bin ${IMGDEPLOYDIR}/${IMAGEDIR}/boot.bin; \
+    cp ${DEPLOY_DIR_IMAGE}/${MACHINE}_gpt.bin ${IMGDEPLOYDIR}/${IMAGEDIR}/gpt.bin; \
+    cp ${DEPLOY_DIR_IMAGE}/${MACHINE}_rescue.bin ${IMGDEPLOYDIR}/${IMAGEDIR}/rescue.bin; \
+    cp ${DEPLOY_DIR_IMAGE}/${MACHINE}_bolt_${SRCDATE_BOLT}.bin ${IMGDEPLOYDIR}/${IMAGEDIR}/bolt_${SRCDATE_BOLT}.bin; \
     cp ${DEPLOY_DIR_IMAGE}/zImage ${IMGDEPLOYDIR}/${IMAGEDIR}/kernel.bin; \
     echo ${DISTRO_NAME}-${DISTRO_VERSION}.${BUILD_VERSION} > ${IMGDEPLOYDIR}/${IMAGEDIR}/imageversion; \
     cd ${IMAGE_ROOTFS}; \
@@ -44,7 +45,7 @@ MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS = " \
     "
 
 EXTRA_IMAGEDEPENDS = "\
-    gigablue-initrd-cfe-gb7252 \
+    gigablue-initrd-cfe-${MACHINE} \
     "
 
 IMAGE_INSTALL_append += "\
