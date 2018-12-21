@@ -7,7 +7,7 @@ PACKAGE_ARCH := "${MACHINE}"
 
 require conf/license/license-gplv2.inc
 
-PR = "r2"
+PR = "r3"
 ALLOW_EMPTY_${PN} = "1"
 
 do_install() {
@@ -20,17 +20,20 @@ FILES_${PN} = "/usr/share"
 inherit deploy
 do_deploy() {
     if [ -e boot.bin  ]; then
-    install -m 0644 boot.bin  ${DEPLOYDIR}/gb7252_boot.bin
+    install -m 0644 boot.bin  ${DEPLOYDIR}/${MACHINE}_boot.bin
     fi
     if [ -e gpt.bin  ]; then
-    install -m 0644 gpt.bin  ${DEPLOYDIR}/gb7252_gpt.bin
+    install -m 0644 gpt.bin  ${DEPLOYDIR}/${MACHINE}_gpt.bin
     fi
     if [ -e rescue.bin  ]; then
-    install -m 0644 rescue.bin  ${DEPLOYDIR}/gb7252_rescue.bin
+    install -m 0644 rescue.bin  ${DEPLOYDIR}/${MACHINE}_rescue.bin
+    fi
+    if [ -e bolt_${SRCDATE_BOLT}.bin  ]; then
+    install -m 0644 bolt_${SRCDATE_BOLT}.bin  ${DEPLOYDIR}/${MACHINE}_bolt_${SRCDATE_BOLT}.bin
     fi
 }
 
-SRC_URI = "http://source.mynonpublic.com/gigablue/initrd/initrd_gb7252_${SRCDATE}.zip"
+SRC_URI = "http://source.mynonpublic.com/gigablue/initrd/initrd_${MACHINE}_${SRCDATE}.zip"
 
 S = "${WORKDIR}"
 

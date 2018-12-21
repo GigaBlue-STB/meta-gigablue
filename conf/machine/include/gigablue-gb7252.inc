@@ -9,14 +9,19 @@ MACHINE_EXTRA_RRECOMMENDS = " \
 
 PREFERRED_VERSION_linux-gigablue = "4.1.20"
 PREFERRED_PROVIDER_virtual/kernel = "linux-gigablue"
+PREFERRED_PROVIDER_virtual/egl = "gb-v3ddriver-gb7252"
+PREFERRED_PROVIDER_virtual/libgles2 = "gb-v3ddriver-gb7252"
+
+PACKAGECONFIG_GL_pn-qtbase = " gles2 eglfs linuxfb"
 
 IMGDEPLOYDIR ?= "${DEPLOY_DIR_IMAGE}"
 
 IMAGE_CMD_tar_prepend = "\
     mkdir -p ${IMGDEPLOYDIR}/${IMAGEDIR}; \
-    cp ${DEPLOY_DIR_IMAGE}/gb7252_boot.bin ${IMGDEPLOYDIR}/${IMAGEDIR}/boot.bin; \
-    cp ${DEPLOY_DIR_IMAGE}/gb7252_gpt.bin ${IMGDEPLOYDIR}/${IMAGEDIR}/gpt.bin; \
-    cp ${DEPLOY_DIR_IMAGE}/gb7252_rescue.bin ${IMGDEPLOYDIR}/${IMAGEDIR}/rescue.bin; \
+    cp ${DEPLOY_DIR_IMAGE}/${MACHINE}_boot.bin ${IMGDEPLOYDIR}/${IMAGEDIR}/boot.bin; \
+    cp ${DEPLOY_DIR_IMAGE}/${MACHINE}_gpt.bin ${IMGDEPLOYDIR}/${IMAGEDIR}/gpt.bin; \
+    cp ${DEPLOY_DIR_IMAGE}/${MACHINE}_rescue.bin ${IMGDEPLOYDIR}/${IMAGEDIR}/rescue.bin; \
+    cp ${DEPLOY_DIR_IMAGE}/${MACHINE}_bolt_${SRCDATE_BOLT}.bin ${IMGDEPLOYDIR}/${IMAGEDIR}/bolt_${SRCDATE_BOLT}.bin; \
     cp ${DEPLOY_DIR_IMAGE}/zImage ${IMGDEPLOYDIR}/${IMAGEDIR}/kernel.bin; \
     echo ${DISTRO_NAME}-${DISTRO_VERSION}.${BUILD_VERSION} > ${IMGDEPLOYDIR}/${IMAGEDIR}/imageversion; \
     cd ${IMAGE_ROOTFS}; \
@@ -34,6 +39,20 @@ MACHINE_ESSENTIAL_EXTRA_RDEPENDS = " \
     gigablue-swapcreate \
 "
 
+MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS = " \
+    gb-v3ddriver-gb7252 \
+    gb-qteglfs-platform \
+    "
+
 EXTRA_IMAGEDEPENDS = "\
-    gigablue-initrd-cfe-gb7252 \
-"
+    gigablue-initrd-cfe-${MACHINE} \
+    "
+
+IMAGE_INSTALL_append += "\
+    bluetoothsetup-gb7252 \
+    "
+
+OPTIONAL_BSP_ENIGMA2_PACKAGES = "\
+    enigma2-plugin-extensions-hbbtv-gb \
+    enigma2-plugin-extensions-chromium \
+    "
