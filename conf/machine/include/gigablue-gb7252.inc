@@ -1,6 +1,6 @@
 require conf/machine/include/gigablue-arm.inc
 
-MACHINE_KERNEL_PR = "r6"
+MACHINE_KERNEL_PR = "r7"
 
 MACHINE_EXTRA_RRECOMMENDS = " \
     gst-plugin-dvbmediasink \
