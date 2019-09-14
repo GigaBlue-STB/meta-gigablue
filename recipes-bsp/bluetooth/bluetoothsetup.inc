@@ -4,7 +4,7 @@ LICENSE = "CLOSED"
 # require conf/license/license-close.inc
 
 DEPENDS = "python-native"
-RDEPENDS_${PN} = "libcurl libsqlite3 libssl libcrypto libudev libusb-compat"
+RDEPENDS_${PN} = "libcurl libsqlite3 libssl libcrypto libudev libusb-compat libudev1-compat libcrypto-compat"
 RDEPENDS_${PN} += "gb-bluetooth-util"
 
 PROVIDES += "enigma2-plugin-systemplugins-bluetoothsetup"
