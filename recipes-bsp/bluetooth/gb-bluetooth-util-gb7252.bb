@@ -1,4 +1,4 @@
-require gb-bluetooth-util.inc
+require gb-bluetooth-util-gb7252.inc
 
 COMPATIBLE_MACHINE = "gbquad4k|gbue4k"
 
