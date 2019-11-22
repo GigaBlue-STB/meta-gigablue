@@ -7,7 +7,7 @@ PACKAGE_ARCH := "${MACHINE_ARCH}"
 
 PV = "1.0"
 PR = "${SRCDATE}"
-SRC_URI = "http://source.mynonpublic.com/gigablue/chromium/chromium-gigablue_gb7252_${SRCDATE}.tar.gz"
+SRC_URI = "http://source.mynonpublic.com/gigablue/chromium/chromium-gigablue-gb7252-${SRCDATE}.zip"
 
 # Added very old NSS version need only for vuplus
 PREFERRED_VERSION_nss = "3.17.3"
