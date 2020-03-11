@@ -5,7 +5,7 @@ MACHINE_FEATURES_BACKFILL_CONSIDERED = "rtc"
 
 
 MTD_KERNEL = "mmcblk0p12"
-MTD_ROOTFS = "mmcblk0p13"
+MTD_ROOTFS = "mmcblk0p16"
 KERNEL_FILE = "kernel.bin"
 ROOTFS_FILE = "rootfs.tar.bz2"
 
@@ -26,6 +26,7 @@ MACHINE_ESSENTIAL_EXTRA_RDEPENDS = "\
 
 MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS = "\
 	kernel-module-cdfs \
+	${@bb.utils.contains('MACHINE_FEATURES', 'emmc', 'partitions-by-name' , '', d)} \
 	firmware-carl9170 \
 	firmware-htc7010 \
 	firmware-htc9271 \
@@ -100,7 +101,13 @@ IMAGEVERSION[vardepsexclude] = "DATE"
 
 IMAGE_CMD_gigablueemmc_append = "\
     mkdir -p ${DEPLOY_DIR_IMAGE}/${IMAGEDIR}; \
-    cp ${IMGDEPLOYDIR}/${IMAGE_NAME}.rootfs.ext4 ${DEPLOY_DIR_IMAGE}/${MACHINE}-partitions/rootfs.ext4; \
+    mkdir -p ${DEPLOY_DIR_IMAGE}/userdata; \
+    mkdir -p ${DEPLOY_DIR_IMAGE}/userdata/linuxrootfs1; \
+    mkdir -p ${DEPLOY_DIR_IMAGE}/userdata/linuxrootfs2; \
+    mkdir -p ${DEPLOY_DIR_IMAGE}/userdata/linuxrootfs3; \
+    mkdir -p ${DEPLOY_DIR_IMAGE}/userdata/linuxrootfs4; \
+    cp -a ${IMAGE_ROOTFS}/* ${DEPLOY_DIR_IMAGE}/userdata/linuxrootfs1/; \
+    mkfs.ext4 -F -i 4096 ${DEPLOY_DIR_IMAGE}/${MACHINE}-partitions/rootfs.ext4 -d ${DEPLOY_DIR_IMAGE}/userdata; \
     cd ${IMAGE_ROOTFS}; \
     tar -cvf ${DEPLOY_DIR_IMAGE}/rootfs.tar -C ${IMAGE_ROOTFS} .; \
     mv ${DEPLOY_DIR_IMAGE}/rootfs.tar ${DEPLOY_DIR_IMAGE}/${IMAGEDIR}/rootfs.tar; \
@@ -123,4 +130,5 @@ IMAGE_CMD_gigablueemmc_append = "\
     rm -f -f ${DEPLOY_DIR_IMAGE}/*.json; \
     rm -Rf ${DEPLOY_DIR_IMAGE}/usb_update.bin; \
     rm -Rf ${IMAGEDIR}; \
+    rm -Rf ${DEPLOY_DIR_IMAGE}/userdata; \
     "
