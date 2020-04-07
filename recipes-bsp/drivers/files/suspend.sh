@@ -7,5 +7,6 @@ if [ "$runlevel" != "0" ] ; then
 fi
 
 mount -t sysfs sys /sys
+mount -t proc proc /proc
 
 /usr/bin/hihalt
