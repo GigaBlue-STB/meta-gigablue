@@ -27,7 +27,7 @@ S = "${WORKDIR}"
 
 PLUGINPATH = "${libdir}/enigma2/python/Plugins/Extensions/HbbTV"
 
-PACKAGES =+ "${PN}-src"
+#PACKAGES =+ "${PN}-src"
 FILES_${PN} = "${bindir} ${libdir}/mozilla/plugins/libhbbtvbrowserplugin.so ${PLUGINPATH}/*.pyo ${PLUGINPATH}/dumpait"
 FILES_${PN}-src = "${PLUGINPATH}/*.py"
 
@@ -63,4 +63,4 @@ exit 0
 INHIBIT_PACKAGE_STRIP = "1"
 INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
 
-INSANE_SKIP_${PN} += "already-stripped"
+INSANE_SKIP_${PN} += "already-stripped file-rdeps"
