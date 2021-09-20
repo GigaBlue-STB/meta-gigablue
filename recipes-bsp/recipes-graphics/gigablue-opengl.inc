@@ -28,6 +28,7 @@ do_install() {
     install -d ${D}${libdir}
     install -d ${D}${sysconfdir}/udev/rules.d
     install -m 0755 ${S}/lib/libMali.so ${D}${libdir}
+    ln -sf libMali.so ${D}${libdir}/libmali.so
     ln -sf libMali.so ${D}${libdir}/libGLESv2.so.2.0
     ln -sf libGLESv2.so.2.0 ${D}${libdir}/libGLESv2.so.2
     ln -sf libGLESv2.so.2 ${D}${libdir}/libGLESv2.so
