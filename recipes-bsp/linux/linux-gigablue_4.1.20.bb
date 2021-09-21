@@ -2,6 +2,8 @@ SUMMARY = "Linux kernel for ${MACHINE}"
 LICENSE = "GPLv2"
 SECTION = "kernel"
 
+COMPATIBLE_MACHINE = "^(gbquad4k|gbue4k)$"
+
 MODULE = "linux-4.1.20"
 
 inherit kernel machine_kernel_pr
@@ -89,7 +91,7 @@ pkg_postinst_kernel-image () {
 pkg_postrm_kernel-image () {
 }
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/linux-gigablue-${KV}:"
+#FILESEXTRAPATHS_prepend := "${THISDIR}/linux-gigablue-${KV}:"
 
 do_rm_work() {
 }
