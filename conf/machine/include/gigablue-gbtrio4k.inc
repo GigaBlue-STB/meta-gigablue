@@ -84,8 +84,6 @@ require conf/machine/include/tune-cortexa15.inc
 # Qt
 PACKAGECONFIG_GL_pn-qtbase = "gles2 eglfs linuxfb"
 PACKAGECONFIG_FB_pn-qtbase = " "
-# Kodi
-#EXTRA_OECONF_append_pn-kodi += " --with-gpu=mali --enable-player=hiplayer"
 
 MACHINE_EXTRA_RRECOMMENDS = " \
 	ffmpeg \

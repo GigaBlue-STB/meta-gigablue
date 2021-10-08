@@ -14,6 +14,9 @@ PREFERRED_PROVIDER_virtual/libgles2 = "gb-v3ddriver-gb7252"
 
 PACKAGECONFIG_GL_pn-qtbase = " gles2 eglfs linuxfb"
 
+# xbmc/kodi support
+DEPENDS_append_pn-kodi = " gigablue-kodi-${MACHINE}"
+
 IMGDEPLOYDIR ?= "${DEPLOY_DIR_IMAGE}"
 
 IMAGE_CMD_tar_prepend = "\
