@@ -38,5 +38,6 @@ RPROVIDES_${PN} += "chromium-browser"
 
 FILES_${PN} = "/"
 
-INSANE_SKIP_${PN} += "already-stripped"
-
+INHIBIT_PACKAGE_STRIP = "1"
+INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
+INSANE_SKIP:${PN} += "already-stripped"

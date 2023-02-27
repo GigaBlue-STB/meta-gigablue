@@ -14,9 +14,13 @@ PREFERRED_PROVIDER_virtual/libgles2 = "gb-v3ddriver-gb7252"
 
 PACKAGECONFIG_GL_pn-qtbase = " gles2 eglfs linuxfb"
 
+# xbmc/kodi support
+DEPENDS_append_pn-kodi = " gigablue-kodi-${MACHINE}"
+
 IMGDEPLOYDIR ?= "${DEPLOY_DIR_IMAGE}"
 
 IMAGE_CMD_tar_prepend = "\
+    rm -Rf ${IMAGE_ROOTFS}/tmp/*; \
     mkdir -p ${IMGDEPLOYDIR}/${IMAGEDIR}; \
     cp ${DEPLOY_DIR_IMAGE}/${MACHINE}_boot.bin ${IMGDEPLOYDIR}/${IMAGEDIR}/boot.bin; \
     cp ${DEPLOY_DIR_IMAGE}/${MACHINE}_gpt.bin ${IMGDEPLOYDIR}/${IMAGEDIR}/gpt.bin; \

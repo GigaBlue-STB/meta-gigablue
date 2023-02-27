@@ -2,6 +2,8 @@ SUMMARY = "Linux kernel for ${MACHINE}"
 LICENSE = "GPLv2"
 SECTION = "kernel"
 
+COMPATIBLE_MACHINE = "^(gbquad4k|gbue4k)$"
+
 MODULE = "linux-4.1.20"
 
 inherit kernel machine_kernel_pr
@@ -36,6 +38,7 @@ SRC_URI += "http://source.mynonpublic.com/gigablue/linux/gigablue-linux-${PV}-20
     file://0015-staging-media-mn88472-simplify-NULL-tests.patch \
     file://0016-mn88472-fix-typo.patch \
     file://0017-mn88472-finalize-driver.patch \
+    file://0018-Add-support-for-dvb-usb-stick-Hauppauge-WinTV-dualHD.patch \
     file://0001-dvb-usb-fix-a867.patch \
     file://0001-Support-TBS-USB-drivers-for-4.1-kernel.patch \
     file://0001-TBS-fixes-for-4.1-kernel.patch \
@@ -45,8 +48,10 @@ SRC_URI += "http://source.mynonpublic.com/gigablue/linux/gigablue-linux-${PV}-20
     file://0001-stv090x-optimized-TS-sync-control.patch \
     file://kernel-add-support-for-gcc7.patch \
     file://kernel-add-support-for-gcc8.patch \
+    file://kernel-add-support-for-gcc9.patch \
     file://0002-log2-give-up-on-gcc-constant-optimizations.patch \
     file://0003-uaccess-dont-mark-register-as-const.patch \
+    file://make-yyloc-declaration-extern.patch \
 "
 
 S = "${WORKDIR}/linux-${PV}"
@@ -58,7 +63,7 @@ KERNEL_OBJECT_SUFFIX = "ko"
 KERNEL_IMAGEDEST = "tmp"
 KERNEL_OUTPUT = "arch/${ARCH}/boot/${KERNEL_IMAGETYPE}"
 
-FILES_kernel-image = "/${KERNEL_IMAGEDEST}/zImage /${KERNEL_IMAGEDEST}/gbfindkerneldevice.py"
+FILES_${KERNEL_PACKAGE_NAME}-image = "/${KERNEL_IMAGEDEST}/zImage /${KERNEL_IMAGEDEST}/gbfindkerneldevice.py"
 
 kernel_do_install_append() {
         install -d ${D}/${KERNEL_IMAGEDEST}
@@ -77,7 +82,7 @@ kernel_do_compile() {
 pkg_postinst_kernel-image () {
     if [ "x$D" == "x" ]; then
         if [ -f /${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE} ] ; then
-            python /${KERNEL_IMAGEDEST}/gbfindkerneldevice.py
+            ${PYTHON_PN} /${KERNEL_IMAGEDEST}/gbfindkerneldevice.py
             dd if=/${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE} of=/dev/kernel
         fi
     fi
@@ -88,7 +93,7 @@ pkg_postinst_kernel-image () {
 pkg_postrm_kernel-image () {
 }
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/linux-gigablue-${KV}:"
+#FILESEXTRAPATHS_prepend := "${THISDIR}/linux-gigablue-${KV}:"
 
 do_rm_work() {
 }

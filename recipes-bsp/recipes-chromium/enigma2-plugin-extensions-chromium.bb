@@ -4,10 +4,14 @@ PRIORITY = "optional"
 LICENSE = "CLOSED"
 # require conf/license/license-close.inc
 
+FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
+
 PV = "1.0"
 PR = "20180628_r0"
 SRC_URI = "http://source.mynonpublic.com/gigablue/chromium/e2plugin-chromium-gigablue_${PR}.tar.gz"
-
+SRC_URI_append =+ " \
+           file://port-to-python3-gigablue.patch"
+           
 COMPATIBLE_MACHINE = "^(gbquad4k|gbue4k)$"
 
 DEPENDS = "chromium-browser"

@@ -3,7 +3,7 @@ PRIORITY = "required"
 LICENSE = "CLOSED"
 # require conf/license/license-close.inc
 
-DEPENDS = "python-native"
+DEPENDS = "python3-native"
 RDEPENDS_${PN} = "libcurl libsqlite3 libssl libcrypto libudev libusb-compat libudev1-compat libcrypto-compat"
 RDEPENDS_${PN} += "gb-bluetooth-util"
 
@@ -16,15 +16,12 @@ PR="${SRCDATE}.${SRCDATE_PR}"
 
 SRC_URI = " \
      http://source.mynonpublic.com/gigablue/bluetooth/enigma2-plugin-bluetoothsetup-gb7252-${PR}.tar.gz \
+     file://port-to-python3.patch \
 "
 
 S = "${WORKDIR}/plugin"
 
 BLUETOOTH_PLUGIN_PATH = "/usr/lib/enigma2/python/Plugins/SystemPlugins/BluetoothSetup"
-
-do_compile() {
-	python -O -m compileall ${S}
-}
 
 do_install() {
 

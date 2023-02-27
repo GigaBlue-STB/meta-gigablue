@@ -1,0 +1,301 @@
+diff --git a/OTAUpdate.py b/OTAUpdate.py
+index b27a7eb..703bf2b 100644
+--- a/OTAUpdate.py
++++ b/OTAUpdate.py
+@@ -20,9 +20,9 @@ from Components.ProgressBar import ProgressBar
+ # Timer
+ from enigma import eTimer
+ 
+-import bt_types
+-from bt_types import getEventDesc
+-from bt_task import BluetoothTask
++from . import bt_types
++from .bt_types import getEventDesc
++from .bt_task import BluetoothTask
+ 
+ OTA_ERROR_SERVICE_DISCOVERY = 0
+ OTA_BATTERY_LEVEL = 1
+diff --git a/bt.py b/bt.py
+index e89913c..ab36762 100644
+--- a/bt.py
++++ b/bt.py
+@@ -30,12 +30,12 @@ from enigma import eDVBVolumecontrol
+ import os
+ import re
+ import time
+-import gbbt
+-from bt_types import getEventDesc, isAudioProfile, getIcon
+-import bt_types
+-from bt_task import BluetoothTask
++from . import gbbt
++from .bt_types import getEventDesc, isAudioProfile, getIcon
++from . import bt_types
++from .bt_task import BluetoothTask
+ 
+-from OTAUpdate import GbRcuOtaUpdate
++from .OTAUpdate import GbRcuOtaUpdate
+ 
+ BT_AUDIO_DELAY_PROC = "/proc/stb/audio/btaudio_delay_pcm"
+ BT_AUDIO_ONOFF_PROC = "/proc/stb/audio/btaudio"
+@@ -337,7 +337,7 @@ class BTAutoAudioConnect:
+ 				self.gbbt.stopAudioDevice()
+ 
+ 		except:
+-			print "[BT] set %s failed!" % BT_AUDIO_ONOFF_PROC
++			print("[BT] set %s failed!" % BT_AUDIO_ONOFF_PROC)
+  
+ 	def setBTAudioDelay(self, updateNow=True):
+ 		global BT_AUDIO_DELAY_PROC
+@@ -359,7 +359,7 @@ class BTAutoAudioConnect:
+ 				fd.write(data)
+ 				fd.close()
+ 			except:
+-				print "[BT] set %s failed!" % BT_AUDIO_DELAY_PROC
++				print("[BT] set %s failed!" % BT_AUDIO_DELAY_PROC)
+ 
+ 	def isAudioDeviceConnected(self):
+ 		return bool(self.getAudioDeviceConnected())
+@@ -404,10 +404,10 @@ class BTBatteryLevel:
+ 	def __init__(self):
+ 		self.batteryLevelTimer = eTimer()
+ 		self.batteryLevelTimer.callback.append(self.updateBatteryLevel)
+- 		self.batteryUpdateInterval = 60*60*12*1000 # every 12 hours
++		self.batteryUpdateInterval = 60*60*12*1000 # every 12 hours
+ 		self.batteryCheckRetryTime = 15*1000 # maximum time to waiting voice stop
+- 		self.lastMsgMday = -1
+- 		self.batteryLevel = 0
++		self.lastMsgMday = -1
++		self.batteryLevel = 0
+ 
+ 	def startBatteryTimer(self):
+ 		self.lastMsgMday = -1
+@@ -456,7 +456,7 @@ class BTOTAProcess:
+ 		self.rcuAppVersion = None
+ 
+ 	def OTAEventCallback(self, evType, value):
+-		print "[OTAEventCallback] evType : %s, value : %s" % (str(evType), str(value))
++		print("[OTAEventCallback] evType : %s, value : %s" % (str(evType), str(value)))
+ 		
+ 		if evType == BTOTAProcess.OTA_COMPLETE:
+ 			self.handleOtaDoneTimer.start(0, True)
+@@ -476,7 +476,7 @@ class BTOTAProcess:
+ 				for handler in self.pluginOtaEventHandler:
+ 					handler(evType, value)
+ 			except Exception as e:
+-				print "[BT] exception error : %s" % str(e)
++				print("[BT] exception error : %s" % str(e))
+ 
+ 	def OTAInit(self):
+ 		self.gbbt.OTAInit()
+@@ -567,10 +567,10 @@ class BTHotplugEvent:
+ 	def startEnableTimer(self, _enable):
+ 		from Screens.Standby import inStandby
+ 		if inStandby:
+-			print "[BTHotplugEvent] now in standby, skip BT hotplug event."
++			print("[BTHotplugEvent] now in standby, skip BT hotplug event.")
+ 			return
+ 
+-		print "[BTHotplugEvent] startEnableTimer! ", _enable
++		print("[BTHotplugEvent] startEnableTimer! ", _enable)
+ 
+ 		self.btEnableTimer.stop()
+ 		self.btDisableTimer.stop()
+@@ -581,7 +581,7 @@ class BTHotplugEvent:
+ 			self.btDisableTimer.start(500, True)
+ 
+ 	def enableTimerCB(self):
+-		print "[BTHotplugEvent] Enable"
++		print("[BTHotplugEvent] Enable")
+ 
+ 		if config.plugins.bluetoothsetup.enable.value:
+ 			self.onOffChanged(True)
+@@ -592,7 +592,7 @@ class BTHotplugEvent:
+ 				handler(bt_types.BT_EVENT_BT_CONNECTED, None)
+ 
+ 	def disableTimerCB(self):
+-		print "[BTHotplugEvent] Disable"
++		print("[BTHotplugEvent] Disable")
+ 
+ 		if self.isEnabled():
+ 			if self.isGbBleRcuConnected():
+@@ -657,8 +657,9 @@ class PyBluetoothInterface(VoiceEventHandler, BTVolumeControl, BTAutoAudioConnec
+ 			for (k, v) in pairedDevices.items():
+ 				if v['isConnected']:
+ 					self.gbbt.requestDisconnect(v['bd_addr'])
+-                                        if (isAudioProfile(v['profile'])):       
+-                                                self.activateBTAudioOut(False) 
++					if (isAudioProfile(v['profile'])):
++						self.activateBTAudioOut(False)
++
+ 	def setScanTime(self, scanDuration):
+ 		scanDuration = int(scanDuration)
+ 		if (scanDuration <= 0) or (scanDuration > 30):
+@@ -674,9 +675,9 @@ class PyBluetoothInterface(VoiceEventHandler, BTVolumeControl, BTAutoAudioConnec
+ 			return
+ 
+ 		'''
+-		print "[eventCallback] evType : %s" % str(evType)
+-		print "[eventCallback] data : %s" % str(data)
+-		print "[eventCallback] event : %s" % (getEventDesc(evType))
++		print("[eventCallback] evType : %s" % str(evType))
++		print("[eventCallback] data : %s" % str(data))
++		print("[eventCallback] event : %s" % (getEventDesc(evType)))
+ 		'''
+ 
+ 		bd_addr = data.get("bd_addr", None)
+@@ -725,16 +726,16 @@ class PyBluetoothInterface(VoiceEventHandler, BTVolumeControl, BTAutoAudioConnec
+ 							AddPopup(text = text, type = MessageBox.TYPE_INFO, timeout = 5, id = "bt_event_connected")
+ 
+ 		except Exception as e:
+-			print "[BT] exception error : %s" % str(e)
++			print("[BT] exception error : %s" % str(e))
+ 
+ 	def bleEventCallback(self, evType, data):
+ 		if self.otaMode:
+ 			return
+ 
+ 		'''
+-		print "[bleEventCallback] evType : %s" % str(evType)
+-		print "[bleEventCallback] data : %s" % str(data)
+-		print "[bleEventCallback] event : %s" % (getEventDesc(evType))
++		print("[bleEventCallback] evType : %s" % str(evType))
++		print("[bleEventCallback] data : %s" % str(data))
++		print("[bleEventCallback] event : %s" % (getEventDesc(evType)))
+ 		'''
+ 
+ 		bd_addr = data.get("bd_addr", None)
+@@ -769,14 +770,14 @@ class PyBluetoothInterface(VoiceEventHandler, BTVolumeControl, BTAutoAudioConnec
+ 					handler(evType, data)
+ 
+ 		except Exception as e:
+-			print "[bleEventCallback] exception error : %s" % str(e)
++			print("[bleEventCallback] exception error : %s" % str(e))
+ 
+ 	def onOffChanged(self, value = True):
+ 		if value and (not self.isEnabled()):
+ 			self.enable()
+ 		elif (not value) and self.isEnabled():
+-                        self.disconnectAll()
+-                        time.sleep(0.1)
++			self.disconnectAll()
++			time.sleep(0.1)
+ 			self.disable()
+ 
+ 	def enable(self):
+@@ -866,7 +867,7 @@ class PyBluetoothInterface(VoiceEventHandler, BTVolumeControl, BTAutoAudioConnec
+ 
+ 	def setVoiceCheckDB(self, value):
+ 		int_value = int(value)
+-		print "[setVoiceCheckDB] value : %d" %  int_value
++		print("[setVoiceCheckDB] value : %d" %  int_value)
+ 		self.gbbt.setVoiceCheckDB(int_value)
+ 
+ 	def check_status(self):
+diff --git a/bt_scan.py b/bt_scan.py
+index 18bbe66..5832e78 100644
+--- a/bt_scan.py
++++ b/bt_scan.py
+@@ -5,11 +5,11 @@ from Components.config import config
+ from Components.Sources.List import List
+ from Components.Sources.StaticText import StaticText
+ from enigma import eTimer
+-from bt_types import getEventDesc, isAudioProfile, getIcon
+-from bt import pybluetooth_instance
+-from bt_config import BluetoothSetupConfig
+-import bt_types
+-from bt_task import BluetoothTask
++from .bt_types import getEventDesc, isAudioProfile, getIcon
++from .bt import pybluetooth_instance
++from .bt_config import BluetoothSetupConfig
++from . import bt_types
++from .bt_task import BluetoothTask
+ 
+ class BluetoothDiscovery(BluetoothTask):
+ 	def __init__(self, ble):
+diff --git a/bt_setup.py b/bt_setup.py
+index 3bc835b..d350ab4 100644
+--- a/bt_setup.py
++++ b/bt_setup.py
+@@ -8,13 +8,13 @@ from Components.config import config
+ from Components.Sources.List import List
+ from Components.Sources.StaticText import StaticText
+ from enigma import eTimer
+-from bt_types import getEventDesc, isAudioProfile, getIcon
+-from bt import pybluetooth_instance
+-from bt_config import BluetoothSetupConfig
+-from bt_scan import BluetoothDiscoveryScreen, BluetoothRCUSetup
+-from bt_task import BluetoothTask
+-import bt_types
+-from OTAUpdate import GbRcuOtaUpdate
++from .bt_types import getEventDesc, isAudioProfile, getIcon
++from .bt import pybluetooth_instance
++from .bt_config import BluetoothSetupConfig
++from .bt_scan import BluetoothDiscoveryScreen, BluetoothRCUSetup
++from .bt_task import BluetoothTask
++from . import bt_types
++from .OTAUpdate import GbRcuOtaUpdate
+ 
+ class BluetoothSetup(BluetoothTask):
+ 	def __init__(self):
+@@ -532,7 +532,7 @@ class BluetoothSetupScreen(Screen, HelpableScreen, BluetoothSetup):
+ 			return
+ 
+ 		if not self.isIdle():
+-			print "[keyGbRcuSetup] current state : %d, wait 500ms." % self.getState()
++			print("[keyGbRcuSetup] current state : %d, wait 500ms." % self.getState())
+ 			self.rcuSetupTimer.start(500, True)
+ 			return
+ 
+diff --git a/bt_task.py b/bt_task.py
+index 3824936..05a496e 100644
+--- a/bt_task.py
++++ b/bt_task.py
+@@ -309,8 +309,8 @@ class BluetoothTask(BluetoothState):
+ 			self.TASK_EXIT : "TASK_EXIT"
+ 		}
+ 
+-		print "		taskType : ", taskDesc[task["taskType"]]
+-		print "		callFunc : ", task["callFunc"]
+-		print "		mac : ", task["mac"]
+-		print "		args : ", task["args"]
+-		print "		eventCB : ", task["eventCB"]
++		print("		taskType : ", taskDesc[task["taskType"]])
++		print("		callFunc : ", task["callFunc"])
++		print("		mac : ", task["mac"])
++		print("		args : ", task["args"])
++		print("		eventCB : ", task["eventCB"])
+diff --git a/gbbt.py b/gbbt.py
+index 160bc37..fbf3d5a 100644
+--- a/gbbt.py
++++ b/gbbt.py
+@@ -17,7 +17,7 @@ if version_info >= (2, 6, 0):
+         try:
+             fp, pathname, description = imp.find_module('_gbbt', [dirname(__file__)])
+         except ImportError:
+-            import _gbbt
++            from . import _gbbt
+             return _gbbt
+         if fp is not None:
+             try:
+@@ -28,7 +28,7 @@ if version_info >= (2, 6, 0):
+     _gbbt = swig_import_helper()
+     del swig_import_helper
+ else:
+-    import _gbbt
++    from . import _gbbt
+ del version_info
+ try:
+     _swig_property = property
+diff --git a/plugin.py b/plugin.py
+index a0e2063..8799d81 100644
+--- a/plugin.py
++++ b/plugin.py
+@@ -1,6 +1,6 @@
+ from Plugins.Plugin import PluginDescriptor
+-from bt_setup import BluetoothSetupScreen
+-from bt import pybluetooth_instance
++from .bt_setup import BluetoothSetupScreen
++from .bt import pybluetooth_instance
+ from Components.config import config, ConfigBoolean
+ from enigma import eActionMap, eDVBVolumecontrol
+ from Tools.HardwareInfo import HardwareInfo

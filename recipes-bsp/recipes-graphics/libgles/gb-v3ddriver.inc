@@ -10,7 +10,7 @@ DEPENDS = "gb-v3ddriver-headers"
 PV = "${SRCDATE}"
 PR = "r2"
 
-SRC_URI = "http://source.mynonpublic.com/gigablue/v3ddriver/gb7252-v3ddriver-${SRCDATE}.tar.gz"
+SRC_URI = "http://source.mynonpublic.com/gigablue/v3ddriver/gb7252-v3ddriver-${SRCDATE}.zip"
 
 S = "${WORKDIR}"
 
@@ -35,4 +35,4 @@ FILES_${PN}-dev = "/usr/include/*"
 
 RPROVIDES_${PN} = "virtual/libgles2 virtual/egl libnexus.so libnxclient.so libnxpl.so libv3ddriver.so libGLESv2.so libEGL.so"
 
-INSANE_SKIP_${PN} += "already-stripped dev-so"
+INSANE_SKIP:${PN} += "already-stripped dev-so ldflags"

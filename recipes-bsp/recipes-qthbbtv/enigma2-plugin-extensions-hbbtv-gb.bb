@@ -2,19 +2,18 @@ SUMMARY = "HbbTV for QT browser"
 SECTION = "base"
 PRIORITY = "optional"
 LICENSE = "CLOSED"
-# require conf/license/license-close.inc
 PACKAGE_ARCH := "${MACHINE_ARCH}"
 
-SRCDATE = "20181019_r0"
+SRCDATE = "20181019_r1"
 
-PR = "r2"
+PR = "r1"
 
 inherit gitpkgv
 
-SRC_URI = "http://source.mynonpublic.com/gigablue/hbbtv/gb-hbbtv-qt-${SRCDATE}.tar.gz"
+SRC_URI = "http://source.mynonpublic.com/gigablue/hbbtv/gb-hbbtv-qt-${SRCDATE}.zip"
 
-SRC_URI[md5sum] = "4608df53d3fa0aecf190a8db6e26e0df"
-SRC_URI[sha256sum] = "4ef50f0d78c2bb3778c28d8432705310b77c96183c549fa436d42196acc29824"
+SRC_URI[md5sum] = "fb71d97af77211e46e5dbfcf0ae2e61d"
+SRC_URI[sha256sum] = "8ce7d977174d5c317211e3a42c911c3cc06a20a3a585fb695183b074d5e90071"
 
 SRC_URI += " \
     file://dumpait \
@@ -27,8 +26,7 @@ S = "${WORKDIR}"
 
 PLUGINPATH = "${libdir}/enigma2/python/Plugins/Extensions/HbbTV"
 
-PACKAGES =+ "${PN}-src"
-FILES_${PN} = "${bindir} ${libdir}/mozilla/plugins/libhbbtvbrowserplugin.so ${PLUGINPATH}/*.pyo ${PLUGINPATH}/dumpait"
+FILES_${PN} = "${bindir} ${libdir}/mozilla/plugins/libhbbtvbrowserplugin.so ${PLUGINPATH}/*.py ${PLUGINPATH}/dumpait"
 FILES_${PN}-src = "${PLUGINPATH}/*.py"
 
 do_install(){
@@ -44,10 +42,10 @@ do_install(){
 
 # Just a quick hack to "compile" the python parts.
 do_install_append() {
-    python -O -m compileall ${D}
+    python3 -O -m compileall ${D}
 }
 
-pkg_postinst_${PN}(){
+pkg_postinst_ontarget_${PN}(){
 #!/bin/sh
 ln -sf /usr/share/fonts /usr/lib/fonts
 
@@ -63,4 +61,4 @@ exit 0
 INHIBIT_PACKAGE_STRIP = "1"
 INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
 
-INSANE_SKIP_${PN} += "already-stripped"
+INSANE_SKIP_${PN} += "already-stripped file-rdeps ldflags"
